@@ -1,0 +1,54 @@
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+}
+
+#import {
+  padding-left: 1em;
+}
+
+#import input {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+#file {
+  word-wrap: break-word;
+}
+
+.positive {
+  color: rgb(17, 190, 17);
+  font-weight: 600;
+}
+
+.negative {
+  color: red;
+  font-weight: 600;
+}
+
+table {
+  width: 90%;
+  margin: 5px auto;
+  border-collapse: collapse;
+}
+
+thead th {
+  font-weight: 600;
+}
+
+th,
+td {
+  width: 30%;
+  text-align: center;
+  padding: 1em;
+  border: solid 1px black;
+  font-weight: 300;
+  margin: 0;
+}
+
+tfoot tr td:first-of-type {
+  text-align: right;
+  font-weight: 600;
+}
