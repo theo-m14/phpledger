@@ -5,13 +5,18 @@
   list-style: none;
 }
 
-#import {
+form {
   padding-left: 1em;
+  margin-top: 1em;
 }
 
-#import input {
+form input {
   padding: 5px;
   margin-bottom: 10px;
+}
+
+#submitBtn {
+  margin-left: 1em;
 }
 
 #file {
@@ -36,6 +41,10 @@ table {
 
 thead th {
   font-weight: 600;
+}
+
+.displayNone {
+  display: none;
 }
 
 th,

@@ -2,17 +2,19 @@
         include('src/bddcall.php');
         include('functions.php');
         $bdd = bddcall();
-         if(isset($_FILES['fichier'])){
-            if(isset($_POST['delete']) && $_POST['delete'] == true){
+        if(isset($_POST['action']) && $_POST['action'] !== "" ){
+            if($_POST['action'] == "delete"){
                 $bdd -> query('DELETE FROM depenses WHERE id > 0');
-            }else{
+            }elseif ($_POST['action'] == "import" && isset($_FILES['fichier'])) {
                 $origine = $_FILES['fichier']['tmp_name'];
                 $destination = 'fichiers/'.$_FILES['fichier']['name'];
                 move_uploaded_file($origine,$destination);
                 $convertData = parseCSV($destination);
                 importCSV($convertData,$bdd);
+            }else{
+                //do export
             }
-        } 
+        }
         $allTransaction = catchAllTransaction($bdd);
 ?>
 
@@ -26,13 +28,15 @@
     <title>Suivi de dépense</title>
 </head>
 <body>
-        <form action="index.php" method="post" id='import' enctype='multipart/form-data'>
-            <input type="file" name="fichier" id="file" >
-            <div>
-                <label for="">DELETE</label>
-            <input type="checkbox" name="delete" id="delete">
-            </div>
-            <input type="submit" value="UPDATE" name="import">
+        <form action="index.php" method="post" enctype='multipart/form-data'>
+            <select name="action" id="selectAction">
+                <option value="">Choissiser une action</option>
+                <option value="delete">Supprimer la bdd</option>
+                <option value="import">Importer un CSV</option>
+                <option value="export">Exporter un CSV</option>
+            </select>
+            <input type="file" name="fichier" id="importFile" class="displayNone">
+            <input type="submit" value="UPDATE" name="import" id="submitBtn" disabled>
         </form>
         <table>
             <thead>
@@ -71,5 +75,6 @@
         </table>
         <?php
         ?>
+        <script src="script.js"></script>
 </body>
 </html>
