@@ -82,4 +82,22 @@ function calculTotal(string $income,string $expense) : string{
     return "$" . $total;
 }
 
+function convertBddToCSV($bdd){
+    $exportFile = fopen("php://output", "wb");
+    $requestNumberOfTransaction =$bdd -> query('SELECT COUNT(*) as number FROM depenses');
+    $numberOfTransaction = $requestNumberOfTransaction -> fetch();
+    $allTransaction = catchAllTransaction($bdd);
+    $arrayCSV = [];
+    for ($i=0; $i < $numberOfTransaction['number']; $i++) { 
+        $currentTransaction = $allTransaction -> fetch();
+        $arrayCSV[$i] = array(
+            'date' => $currentTransaction['date'],
+            'check' => $currentTransaction['checkNum'],
+            'transacID' => $currentTransaction['transacID'],
+            'amount' => $currentTransaction['amount'] ,
+        );
+        fputcsv($exportFile, $arrayCSV[$i]);
+    }
+    fclose($exportFile);
+}
 ?>

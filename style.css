@@ -19,6 +19,11 @@ form input {
   margin-left: 1em;
 }
 
+#exportCSV {
+  padding-left: 1em;
+  margin-bottom: 5px;
+}
+
 #file {
   word-wrap: break-word;
 }

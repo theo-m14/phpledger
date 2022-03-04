@@ -11,8 +11,6 @@
                 move_uploaded_file($origine,$destination);
                 $convertData = parseCSV($destination);
                 importCSV($convertData,$bdd);
-            }else{
-                //do export
             }
         }
         $allTransaction = catchAllTransaction($bdd);
@@ -33,11 +31,11 @@
                 <option value="">Choissiser une action</option>
                 <option value="delete">Supprimer la bdd</option>
                 <option value="import">Importer un CSV</option>
-                <option value="export">Exporter un CSV</option>
             </select>
             <input type="file" name="fichier" id="importFile" class="displayNone">
             <input type="submit" value="UPDATE" name="import" id="submitBtn" disabled>
         </form>
+        <a href="dowloadexport.php" target="_blank" id="exportCSV">Export CSV</a>
         <table>
             <thead>
                 <tr>
