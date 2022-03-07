@@ -22,7 +22,7 @@
     <a href="./src/dowloadexport.php" target="_blank" id="exportCSV">Export CSV</a>
     <form action="" method="post" id="newTransaction">
         <label for="date">Date de la transaction</label>
-        <input type="date" name="date" id="">
+        <input type="date" name="date" id="" required>
         <label for="transacID">Numéro de la transaction</label>
         <input type="number" name="transacID" id="">
         <label for="amount">Montant de la transaction</label>
