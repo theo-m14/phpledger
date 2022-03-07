@@ -38,6 +38,13 @@ function convertDate(string $date) : string{
     return $month . ' ' . $day . ',' . $year;
 }
 
+function convertFormDate(string $date) : string{
+    $year = substr($date,0,4);
+    $month = substr($date,5,2);
+    $day = substr($date,8);
+    return $day . '/' . $month . "/" . $year;
+}
+
 function checkSign(string $amount):string{
    $amount = convertAmount($amount);
    if($amount>0){

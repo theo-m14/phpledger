@@ -1,8 +1,14 @@
+@font-face {
+  font-family: "Ubuntu";
+  src: url(UbuntuMono-Regular.ttf);
+}
+
 * {
   padding: 0;
   margin: 0;
   text-decoration: none;
   list-style: none;
+  font-family: "Ubuntu";
 }
 
 form {
@@ -13,6 +19,11 @@ form {
 form input {
   padding: 5px;
   margin-bottom: 10px;
+}
+
+thead{
+  background-color: rgb(5, 8, 98);
+  color: white;
 }
 
 #submitBtn {
@@ -46,6 +57,11 @@ table {
 
 thead th {
   font-weight: 600;
+}
+
+#newTransaction{
+  margin: auto;
+  text-align: center;
 }
 
 .displayNone {

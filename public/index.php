@@ -19,6 +19,14 @@ if (isset($_POST['action']) && $_POST['action'] !== "") {
         $convertData = parseCSV($destination);
         importCSV($convertData, $bdd);
     }
+}else if(isset($_POST['date']) && isset($_POST['transacID']) && isset($_POST['amount'])){
+    $newTransaction = [
+        'date'=>convertFormDate($_POST['date']),
+        'id'=> "Transaction " . $_POST['transacID'],
+        'check' => '',
+        'amount'=> "$" . $_POST['amount'],
+    ];
+    registerOneLine($newTransaction,$bdd);
 }
 $allTransaction = catchAllTransaction($bdd);
 $amountArray = [];
