@@ -19,16 +19,23 @@ if (isset($_POST['action']) && $_POST['action'] !== "") {
         $convertData = parseCSV($destination);
         importCSV($convertData, $bdd);
     }
-}else if(isset($_POST['date']) && isset($_POST['transacID']) && isset($_POST['amount'])){
-    $newTransaction = [
-        'date'=>convertFormDate($_POST['date']),
-        'id'=> "Transaction " . $_POST['transacID'],
-        'check' => '',
-        'amount'=> "$" . $_POST['amount'],
-    ];
-    registerOneLine($newTransaction,$bdd);
 }
-$allTransaction = catchAllTransaction($bdd);
-$amountArray = [];
-$numberOfTransaction = getNumberOfTransaction($bdd);
-require(VIEWS_PATH . 'viewIndex.php');
+//CHECK IF IS FETCH REQUEST
+if(isset($_GET['action']) && $_GET['action']=='getTransaction'){
+    echo getAllTransaction($bdd);
+}else if(isset($_GET['action']) && $_GET['action']=='registerTransaction'){
+    if(isset($_POST['date']) && isset($_POST['transacID']) && isset($_POST['amount'])){
+        $newTransaction = [
+            'date'=>convertFormDate($_POST['date']),
+            'id'=> "Transaction " . $_POST['transacID'],
+            'check' => '',
+            'amount'=> "$" . $_POST['amount'],
+        ];
+        registerOneLine($newTransaction,$bdd);
+    }else{
+        echo "Les champs de la nouvelle transaction ne sont pas valides";
+    }
+//IF NOT JUST DISPLAY ALL TRANSACTIONS
+}else{
+    require(VIEWS_PATH . 'viewIndex.php');
+}

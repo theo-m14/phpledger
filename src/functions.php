@@ -30,63 +30,11 @@ function parseCSV($nomFichier){
     }
 }
 
-function convertDate(string $date) : string{
-    $timestamp = strtotime($date);
-    $month = substr(getdate($timestamp)['month'],0,3);
-    $day = substr($date,3,2);
-    $year = substr($date,6,4);
-    return $month . ' ' . $day . ',' . $year;
-}
-
 function convertFormDate(string $date) : string{
     $year = substr($date,0,4);
     $month = substr($date,5,2);
     $day = substr($date,8);
-    return $day . '/' . $month . "/" . $year;
-}
-
-function checkSign(string $amount):string{
-   $amount = convertAmount($amount);
-   if($amount>0){
-       return "positive";
-   }else if($amount < 0){
-       return 'negative';
-   }else{
-       return '';
-   }
-}
-
-function convertAmount(string $amount):float{
-    $amount = str_replace('$','',$amount);
-    $amount = str_replace(',','',$amount);
-    return (float)$amount;
-}
-
-function calculIncome(array $amount) : string{
-    $sum = 0;
-    for ($i=0; $i < count($amount) ; $i++) { 
-       if(checkSign($amount[$i]) == "positive"){
-           $sum += convertAmount($amount[$i]);
-       }
-    }
-    return "$" . $sum;
-}
-
-function calculExpense(array $amount) : string{
-    $sum = 0;
-    for ($i=0; $i < count($amount) ; $i++) { 
-       if(checkSign($amount[$i]) == "negative"){
-           $sum += convertAmount($amount[$i]);
-       }
-    }
-    return "$" . $sum;
-}
-
-function calculTotal(string $income,string $expense) : string{
-    $income = str_replace('$','',$income);
-    $expense = str_replace('$','',$expense);
-    $total = (float)$income + (float)$expense;
-    return "$" . $total;
+    return $month . '/' . $day . "/" . $year;
 }
 
 function convertBddToCSV($bdd){
@@ -106,4 +54,10 @@ function convertBddToCSV($bdd){
         fputcsv($exportFile, $arrayCSV[$i]);
     }
     fclose($exportFile);
+}
+
+function getAllTransaction($bdd){
+    $queryTransaction = catchAllTransaction($bdd);
+    $allTransaction = $queryTransaction->fetchAll();
+    return json_encode($allTransaction);
 }

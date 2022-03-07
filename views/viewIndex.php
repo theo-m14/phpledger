@@ -24,9 +24,9 @@
         <label for="date">Date de la transaction</label>
         <input type="date" name="date" id="" required>
         <label for="transacID">Numéro de la transaction</label>
-        <input type="number" name="transacID" id="">
+        <input type="number" name="transacID" id="" required>
         <label for="amount">Montant de la transaction</label>
-        <input type="number" name="amount" id="">
+        <input type="number" name="amount" id="" required>
         <button type="submit">Enregistrer</button>
     </form>
     <table>
@@ -38,27 +38,20 @@
             </tr>
         </thead>
         <tbody>
-            <?php
-
-            for ($i = 0; $i < $numberOfTransaction; $i++) {
-                $currentTransaction = $allTransaction->fetch();
-                $amountArray[$i] = $currentTransaction['amount'];
-                echo "<tr><td>" . convertDate($currentTransaction['date']) . '</td><td>' . $currentTransaction['transacID'] . '</td><td class =' . checkSign($currentTransaction['amount']) . '>' . $currentTransaction['amount'] . '</td></tr>';
-            }
-            ?>
+            <!-- TRANSACTIONS GO HERE -->
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="2">Total Income</td>
-                <td><?php echo calculIncome($amountArray); ?></td>
+                <td id="amountIncome" class="positive"></td>
             </tr>
             <tr>
                 <td colspan="2">Total Expense</td>
-                <td><?php echo calculExpense($amountArray); ?></td>
+                <td id="amountExpense" class="negative"></td>
             </tr>
             <tr>
                 <td colspan="2">Net Total</td>
-                <td><?php echo calculTotal(calculIncome($amountArray), calculExpense($amountArray)); ?></td>
+                <td id="amountTotal"></td>
             </tr>
         </tfoot>
     </table>
