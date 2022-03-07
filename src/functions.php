@@ -100,4 +100,3 @@ function convertBddToCSV($bdd){
     }
     fclose($exportFile);
 }
-?>

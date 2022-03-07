@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <form action="index.php" method="post" enctype='multipart/form-data'>
+    <form action="" method="post" enctype='multipart/form-data'>
         <select name="action" id="selectAction">
             <option value="">Choissiser une action</option>
             <option value="delete">Supprimer la bdd</option>
@@ -19,7 +19,7 @@
         <input type="file" name="fichier" id="importFile" class="displayNone">
         <input type="submit" value="UPDATE" name="import" id="submitBtn" disabled>
     </form>
-    <a href="src/dowloadexport.php" target="_blank" id="exportCSV">Export CSV</a>
+    <a href="./src/dowloadexport.php" target="_blank" id="exportCSV">Export CSV</a>
     <table>
         <thead>
             <tr>
@@ -30,6 +30,7 @@
         </thead>
         <tbody>
             <?php
+
             for ($i = 0; $i < $numberOfTransaction; $i++) {
                 $currentTransaction = $allTransaction->fetch();
                 $amountArray[$i] = $currentTransaction['amount'];

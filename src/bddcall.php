@@ -10,6 +10,11 @@ function bddcall()
     }
 }
 
+function deleteBDD($bdd)
+{
+    $bdd->query('DELETE FROM depenses WHERE id > 0');
+}
+
 function registerOneLine(array $line, $bdd)
 {
     $importCSV = $bdd->prepare('INSERT INTO depenses(date,checkNum,transacID,amount) VALUES(:date,:checkNum,:transacID,:amount)');
