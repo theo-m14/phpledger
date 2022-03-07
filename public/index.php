@@ -9,17 +9,6 @@ define('FILE_PATH', $root . 'fichiers' . DIRECTORY_SEPARATOR);
 include(SRC_PATH . 'bddcall.php');
 include(SRC_PATH . 'functions.php');
 $bdd = bddcall();
-if (isset($_POST['action']) && $_POST['action'] !== "") {
-    if ($_POST['action'] == "delete") {
-        deleteBDD($bdd);
-    } elseif ($_POST['action'] == "import" && isset($_FILES['fichier'])) {
-        $origine = $_FILES['fichier']['tmp_name'];
-        $destination = FILE_PATH . $_FILES['fichier']['name'];
-        move_uploaded_file($origine, $destination);
-        $convertData = parseCSV($destination);
-        importCSV($convertData, $bdd);
-    }
-}
 //CHECK IF IS FETCH REQUEST
 if(isset($_GET['action']) && $_GET['action']=='getTransaction'){
     echo getAllTransaction($bdd);
@@ -35,7 +24,23 @@ if(isset($_GET['action']) && $_GET['action']=='getTransaction'){
     }else{
         echo "Les champs de la nouvelle transaction ne sont pas valides";
     }
+//CHECK IF ONE SELECTED OPTION IS REQUIRED
+}else if(isset($_GET['action']) && $_GET['action']=='doSelectOption'){
+    if (isset($_POST['action']) && $_POST['action'] !== "") {
+        if ($_POST['action'] == "delete") {
+            deleteBDD($bdd);
+        } elseif ($_POST['action'] == "import" && isset($_FILES['fichier'])) {
+            $origine = $_FILES['fichier']['tmp_name'];
+            $destination = FILE_PATH . $_FILES['fichier']['name'];
+            move_uploaded_file($origine, $destination);
+            $convertData = parseCSV($destination);
+            importCSV($convertData, $bdd);
+        }
+    }else{
+        echo "Un paramètre innatendu pour action à été demandé";
+    }
+}
 //IF NOT JUST DISPLAY ALL TRANSACTIONS
-}else{
+else{
     require(VIEWS_PATH . 'viewIndex.php');
 }

@@ -17,9 +17,18 @@ let getTransactionTable = document.querySelector('tbody');
 let getAmountIncome = document.getElementById('amountIncome');
 let getAmountExpense = document.getElementById('amountExpense');
 let getTotal = document.getElementById('amountTotal');
+let getFormSelectAction = document.getElementById('selectForm');
+let getValueOfSelect = document.getElementById('selectAction');
 
 //Listener on adding transaction
 getNewTransactionForm.addEventListener('submit', registerTransaction);
+getFormSelectAction.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(getValueOfSelect.value == 'delete' || getValueOfSelect.value == 'import'){
+        console.log('ça fonctionne')
+        doSelectAction();
+    }
+})
 
 function registerTransaction(event){
     event.preventDefault();
@@ -32,6 +41,24 @@ function registerTransaction(event){
         getAllInputNewTransaction.forEach(input =>{
             input.value = '';
         })
+        return response.text();
+    }).then((reponse)=>{
+        if(reponse !== '') console.log(reponse);
+    }).catch(error =>{
+        console.log('Erreur : ' + error.message);
+    })
+}
+
+function doSelectAction(){
+    let donnee = new FormData(getFormSelectAction);
+    fetch('public/index.php?action=doSelectOption',{
+        method : 'POST',
+        body: donnee
+    }).then((response)=> {
+        displayAllTransaction();
+        getValueOfSelect.value = '';
+        document.getElementById('importFile').value = '';
+        document.getElementById('importFile').classList.add('displayNone');
         return response.text();
     }).then((reponse)=>{
         if(reponse !== '') console.log(reponse);

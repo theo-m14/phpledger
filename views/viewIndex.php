@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <form action="" method="post" enctype='multipart/form-data'>
+    <form action="" method="post" enctype='multipart/form-data' id="selectForm">
         <select name="action" id="selectAction">
             <option value="">Choissiser une action</option>
             <option value="delete">Supprimer la bdd</option>
