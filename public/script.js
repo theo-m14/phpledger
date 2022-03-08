@@ -19,13 +19,13 @@ let getAmountExpense = document.getElementById('amountExpense');
 let getTotal = document.getElementById('amountTotal');
 let getFormSelectAction = document.getElementById('selectForm');
 let getValueOfSelect = document.getElementById('selectAction');
+let getErrorMessage = document.querySelector('#errorMessage p');
 
 //Listener on adding transaction
 getNewTransactionForm.addEventListener('submit', registerTransaction);
 getFormSelectAction.addEventListener('submit', function(e){
     e.preventDefault();
     if(getValueOfSelect.value == 'delete' || getValueOfSelect.value == 'import'){
-        console.log('ça fonctionne')
         doSelectAction();
     }
 })
@@ -46,6 +46,7 @@ function registerTransaction(event){
         if(reponse !== '') console.log(reponse);
     }).catch(error =>{
         console.log('Erreur : ' + error.message);
+        getErrorMessage.innerText = "Les champs fournis pour l'enregistrement de la transactions ne sont pas valides";
     })
 }
 
@@ -64,6 +65,7 @@ function doSelectAction(){
         if(reponse !== '') console.log(reponse);
     }).catch(error =>{
         console.log('Erreur : ' + error.message);
+        getErrorMessage.innerText = "Une erreur est survenue lors de l'import du fichier csv, vérifier sa synthaxe"
     })
 }
 
@@ -82,6 +84,7 @@ function displayAllTransaction(){
             updateTotals(amountArray);
         }).catch(error =>{
             console.log('Erreur : ' + error.message);
+            getErrorMessage.innerText = "Une erreur est survenue lors de la lecture des transactions enregistrées"
         });
 }
 

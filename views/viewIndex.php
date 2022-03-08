@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <div id="errorMessage"><p></p></div>
     <form action="" method="post" enctype='multipart/form-data' id="selectForm">
         <select name="action" id="selectAction">
             <option value="">Choissiser une action</option>

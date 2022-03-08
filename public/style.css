@@ -82,3 +82,9 @@ tfoot tr td:first-of-type {
   text-align: right;
   font-weight: 600;
 }
+
+#errorMessage p{
+  text-align: center;
+  font-weight: bold;
+  color: rgb(212, 50, 50);
+}
