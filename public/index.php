@@ -22,9 +22,9 @@ if(isset($_GET['action']) && $_GET['action']=='getTransaction'){
         ];
         registerOneLine($newTransaction,$bdd);
     }else{
-        echo "Les champs de la nouvelle transaction ne sont pas valides";
+        throw new Exception("Les champs de la nouvelle transaction ne sont pas valides");
     }
-//CHECK IF ONE SELECTED OPTION IS REQUIRED
+//CHECK IF ONE SELECTED ACTION OPTION IS REQUIRED
 }else if(isset($_GET['action']) && $_GET['action']=='doSelectOption'){
     if (isset($_POST['action']) && $_POST['action'] !== "") {
         if ($_POST['action'] == "delete") {
@@ -37,7 +37,7 @@ if(isset($_GET['action']) && $_GET['action']=='getTransaction'){
             importCSV($convertData, $bdd);
         }
     }else{
-        echo "Un paramètre innatendu pour action à été demandé";
+        throw new Exception("Un paramètre innatendu à été envoyé pour l'action demandé");
     }
 }
 //IF NOT JUST DISPLAY ALL TRANSACTIONS
