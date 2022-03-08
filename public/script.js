@@ -75,7 +75,7 @@ function displayAllTransaction(){
             return response.json();
         }).then(transactions =>{
             for(let element in transactions){
-                jsonTransaction += `<tr><td>${convertDate(transactions[element]['date'])}</td><td>${transactions[element]['transacID']}</td><td class= ${checkSign(transactions[element]['amount'])}>${transactions[element]['amount']}</td></tr>`;
+                jsonTransaction += `<tr><td>${convertDate(transactions[element]['date'])}</td><td>${transactions[element]['transacID']}</td><td class= ${checkSign(transactions[element]['amount'])}>$${transactions[element]['amount']}</td></tr>`;
                 amountArray.push(transactions[element]['amount']);
             }
             getTransactionTable.innerHTML = jsonTransaction;
@@ -90,9 +90,9 @@ function updateTotals(amountArray){
     let income = 0;
     for(element in amountArray){
         if(checkSign(amountArray[element]) == 'positive'){
-            income += convertAmount(amountArray[element]);
+            income += parseFloat(amountArray[element]);
         }else{
-            expense += convertAmount(amountArray[element]);
+            expense += parseFloat(amountArray[element]);
         }
     }
     getAmountIncome.innerText = `$${income.toFixed(2)}`;
@@ -112,7 +112,7 @@ function updateTotals(amountArray){
 }
 
 function checkSign(amount){
-    amount = convertAmount(amount);
+    amount = parseFloat(amount);
    if(amount>0){
        return "positive";
    }else if(amount < 0){
@@ -122,17 +122,12 @@ function checkSign(amount){
    }
 }
 
-function convertAmount(amount){
-    amount = amount.replace('$','');
-    amount = amount.replace(',','');
-    return parseFloat(amount);
-}
 
 function convertDate(date){
     let allMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let month = allMonths[parseInt(date.slice(0,2))-1];
-    let day = date.slice(3,5);
-    let year = date.slice(6,10);
+    let month = allMonths[parseInt(date.slice(5,7))-1];
+    let day = date.slice(8,10);
+    let year = date.slice(0,4);
     return `${month} ${day},${year}`;
 }
 

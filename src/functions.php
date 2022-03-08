@@ -46,10 +46,10 @@ function convertBddToCSV($bdd){
     for ($i=0; $i < $numberOfTransaction['number']; $i++) { 
         $currentTransaction = $allTransaction -> fetch();
         $arrayCSV[$i] = array(
-            'date' => $currentTransaction['date'],
+            'date' => convertDateForCSV($currentTransaction['date']),
             'check' => $currentTransaction['checkNum'],
             'transacID' => $currentTransaction['transacID'],
-            'amount' => $currentTransaction['amount'] ,
+            'amount' => '$' . $currentTransaction['amount'],
         );
         fputcsv($exportFile, $arrayCSV[$i]);
     }
@@ -60,4 +60,22 @@ function getAllTransaction($bdd){
     $queryTransaction = catchAllTransaction($bdd);
     $allTransaction = $queryTransaction->fetchAll();
     return json_encode($allTransaction);
+}
+
+function formateAmount(string $amount): float{
+    return (float)str_replace(['$', ','],'',$amount);
+}
+
+function convertDateForSQL(string $date):string{
+    $year = substr($date,6,4);
+    $month = substr($date,0,2);
+    $day = substr($date,3,2);
+    return $year . '-' . $month . '-' . $day;
+}
+
+function convertDateForCSV(string $date):string{
+    $year = substr($date,0,4);
+    $month = substr($date,5,2);
+    $day = substr($date,8,2);
+    return $month . '/' . $day . '/' . $year;
 }

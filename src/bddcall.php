@@ -15,14 +15,26 @@ function deleteBDD($bdd)
     $bdd->query('DELETE FROM depenses WHERE id > 0');
 }
 
+//OLD REGISTER
+// function registerOneLine(array $line, $bdd)
+// {
+//     $importCSV = $bdd->prepare('INSERT INTO depenses(date,checkNum,transacID,amount) VALUES(:date,:checkNum,:transacID,:amount)');
+//     $importCSV->execute(array(
+//         'date' => $line['date'],
+//         'checkNum' => $line['check'],
+//         'transacID' => $line['id'],
+//         'amount' => $line['amount'],
+//     ));
+// }
+
 function registerOneLine(array $line, $bdd)
 {
     $importCSV = $bdd->prepare('INSERT INTO depenses(date,checkNum,transacID,amount) VALUES(:date,:checkNum,:transacID,:amount)');
     $importCSV->execute(array(
-        'date' => $line['date'],
-        'checkNum' => $line['check'],
+        'date' => convertDateForSQL($line['date']),
+        'checkNum' => (int)$line['check'],
         'transacID' => $line['id'],
-        'amount' => $line['amount'],
+        'amount' => formateAmount($line['amount']),
     ));
 }
 
@@ -37,11 +49,4 @@ function catchAllTransaction($bdd)
 {
     $allTransaction = $bdd->query('SELECT * FROM depenses ORDER BY id');
     return $allTransaction;
-}
-
-function getNumberOfTransaction($bdd): int
-{
-    $requestNumberOfTransaction = $bdd->query('SELECT COUNT(*) as number FROM depenses');
-    $numberOfTransaction = $requestNumberOfTransaction->fetch();
-    return $numberOfTransaction['number'];
 }
